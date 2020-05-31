@@ -1,5 +1,9 @@
 "# contest_page" 
 use following mysql code to make database format
+
+
+
+
 DROP DATABASE IF EXISTS `sql_invoicing`;
 CREATE DATABASE `sql_invoicing`; 
 USE `sql_invoicing`;
