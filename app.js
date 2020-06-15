@@ -141,7 +141,7 @@ app.get('/contest/problems', (req, res) => {
     });
   });
 
-  console.log('i think we fetched problems successfully');
+  //console.log('i think we fetched problems successfully');
   res.end;
 });
 
@@ -155,10 +155,10 @@ app.get('/contests', (req, res) => {
     });
   });
 
-  console.log('i think we fetched contests successfully');
+  //console.log('i think we fetched contests successfully');
   res.end;
 });
-
+//MY LOCALHOST
 app.listen(3002, () => {
   console.log('server is up and running at 3002');
 });
