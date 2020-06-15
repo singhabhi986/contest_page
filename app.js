@@ -4,6 +4,9 @@ var sequelize = require('sequelize');
 var connection = new sequelize('contest_page', 'root', 'Energisfail@000', {
   dialect: 'mysql'
 });
+var connectionProblemPage = new sequelize('problem_page', 'root', 'Energisfail@000', {
+  dialect: 'mysql'
+});
 //const morgan = require('morgan')
 //connecting mysql to server;
 //const mysql = require('mysql')
@@ -92,6 +95,90 @@ app.post('/contest_create', (req, res) => {
   res.end;
 });
 
+//post problems
+app.post('/problem_create', (req, res) => {
+  console.log('creating a new problem...');
+  console.log('title: ' + req.body.Title);
+  const id = req.body.Id;
+  const title = req.body.Title;
+  const description = req.body.Description;
+  const constraint = req.body.Constraint;
+  const sampletestcase = req.body.SampleTestCase;
+  const difficulty = req.body.Difficulty;
+  const points = req.body.Points;
+  const contestid = req.body.ContestId;
+
+  //const link = req.body.Link;
+  var Problems = connectionProblemPage.define('problems', {
+      problemId: { //converting id to a string id so that newarticle elements can be found easily "Id column will be replaced by slug"
+        type: sequelize.INTEGER,
+        //primaryKey: true //"remmember to use correct notation as no error is generated for wrong query"
+        unique: true
+      },
+      title: {
+        type: sequelize.STRING,
+        //making it a unique key
+        //unique: true,
+        //making it required
+        //allowNull: false, //if this is set to be true length validation will not work "only for null"
+      },
+
+      description: {
+        type: sequelize.TEXT,
+        //defaultValue:'coming soon' a kind  of problem in windows
+        //creating a custom validation defination just the name should not match with any already defined validation defination
+      },
+      constraint: {
+        type: sequelize.TEXT
+      },
+      sampleTestCase: {
+        type: sequelize.TEXT
+      },
+      difficulty: {
+        type: sequelize.INTEGER
+      },
+      points: {
+        type: sequelize.INTEGER
+      },
+      contestId: {
+        type: sequelize.INTEGER,
+        foreignkey: true
+      }
+    }
+
+  );
+  //wrinting a query to insert form data
+  /*const queryString = "INSERT INTO contests (id,title,date,duration, link) VALUES(?,?,?,?,?)";
+  getconnection().query(queryString, [id, title, date, duration, link], (err, result, field) => {
+    if (err) {
+      console.log("inserting failed" + err);
+      res.sendStatus(500); //internal server error
+      return; //important
+    }
+    console.log("inserted with id:" + id);
+    res.end();
+  });
+  */
+  connectionProblemPage.sync({
+    //force: true, //actually all it does is drop the table if it already exists so "dont use it casually"
+    //logging: console.log
+  }).then(function () {
+    Problems.create({
+      problemId: id,
+      title: title,
+      description: description,
+      constraint: constraint,
+      sampleTestCase: sampletestcase,
+      difficulty: difficulty,
+      points: points,
+      contestId: contestid,
+    });
+  }).catch(function (error) {
+    console.log(error);
+  });
+  res.send("done");
+  res.end;
+});
 
 
 app.get('/contests', (req, res) => {
