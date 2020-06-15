@@ -76,7 +76,7 @@ var Problems = connectionProblemPage.define('problems', {
 });
 connectionProblemPage.sync();
 
-//POSTING NEW CONTEST
+//POSTING NEW CONTEST, insert data into database
 app.post('/contest_create', (req, res) => {
   console.log('creating a new contest...');
   console.log('title: ' + req.body.Title);
