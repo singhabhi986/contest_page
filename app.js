@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-//using contestRoutes.js
+
 const router_contest = require('./routes/contestRoutes');
 
 //using problemRoutes.js
